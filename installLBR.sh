@@ -4,17 +4,8 @@ echo '6LBR on RPI3 installation'
 echo '-------------------------'
 
 #Dependencies.
- apt-get install bridge-utils
-
-if [ !  -e "cetic-6lbr_1.3.3_armhf.deb" ];then
-#Get Binary packages.
-wget https://raw.github.com/wiki/cetic/6lbr/releas$
-
-#Installation of the package.
- dpkg -i cetic-6lbr_1.3.3_armhf.deb
-else
-echo -e "\e[31mcetic-6lbr_1.3.3_armhf.deb file already there\e[0m"
-fi
+#apt-get install bridge-utils
+dpkg -i cetic-6lbr_1.3.3_armhf.deb
 
 #Create 6LBR.conf file
 cd /etc/6lbr
