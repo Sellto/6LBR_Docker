@@ -8,6 +8,7 @@ apt-get install -y git
 apt-get install -y build-essential
 apt-get install -y libncurses5-dev
 apt-get install -y bridge-utils
+apt-get install -y net-tools
 echo "Getting 6LBR files from CETIC's Github"
 git clone https://github.com/cetic/6lbr
 cd /app/6lbr
