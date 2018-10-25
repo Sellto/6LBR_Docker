@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
-nvmtool --update --wsn-prefix 2002:: /etc/6lbr/nvm.dat
-nvmtool --update --wsn-context-0 2002:: /etc/6lbr/nvm.dat
-nvmtool --update --dft-router 2002::1 /etc/6lbr/nvm.dat
+nvmtool --update --dft-router bbbb::1 /etc/6lbr/nvm.dat
+echo "address=$LWM2MSERVER" >> /etc/6lbr/nvm.conf
 sleep 2
 service 6lbr start
 sleep 10
-git clone https://github.com/Sellto/netinfo
 echo 0 > /proc/sys/net/ipv6/conf/tap0/disable_ipv6
 echo 1 > /proc/sys/net/ipv6/conf/tap0/forwarding
 echo 1 > /proc/sys/net/ipv6/conf/eth0/forwarding
 echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
-ip addr add 2002::1/64 dev tap0
-ip route add 2002::4:0:0/96 via
+ip addr add bbbb::1/64 dev tap0
+ip addr add cccc::1/64 dev tap0
+tayga --mktun
+ip link set nat64 up
+echo 0 > /proc/sys/net/ipv6/conf/nat64/disable_ipv6
+echo 1 > /proc/sys/net/ipv6/conf/nat64/forwarding
+ip addr add 172.17.0.1 dev nat64
+ip addr add cccc::2/64 dev nat64
+ip route add cccc::64:0:0/96 dev nat64
+ip route add 172.46.0.0/16 dev nat64
+tayga
 sleep 5
 cat /var/log/6lbr.ip
 tail -f /var/log/6lbr.log
