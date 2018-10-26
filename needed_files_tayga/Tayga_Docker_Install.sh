@@ -31,6 +31,7 @@ cd app
 
 
 apt-get install build-essential -y  1>/dev/null 2>/var/build/dep.err  && \
+apt-get install bzip2           -y  1>/dev/null 2>/var/build/dep.err  && \
 apt-get install wget -y             1>/dev/null 2>/var/build/dep.err  &
 PID=$!
 process "Installing dependencies"
