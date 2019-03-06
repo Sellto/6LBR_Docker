@@ -15,7 +15,7 @@ ip link set nat64 up
 echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 echo 0 > /proc/sys/net/ipv6/conf/nat64/disable_ipv6
 echo 1 > /proc/sys/net/ipv6/conf/nat64/forwarding
-ip addr add $(netinfo --ipv4router) dev nat64
+ip addr add 172.46.0.1 dev nat64
 ip addr add cccc::2/64 dev nat64
 ip route add cccc::64:0:0/96 dev nat64
 ip route add 172.46.0.0/16 dev nat64
