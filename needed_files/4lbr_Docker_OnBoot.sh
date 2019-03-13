@@ -4,6 +4,13 @@ echo "address=$LWM2MSERVER" >> /etc/6lbr/nvm.conf
 sleep 2
 service 6lbr start
 sleep 10
+cat >/usr/local/etc/tayga.conf <<EOF
+tun-device nat64
+ipv4-addr $(netinfo r)
+prefix cccc::64:0:0/96
+dynamic-pool $(netinfo p)
+data-dir /var/db/tayga
+EOF
 echo 0 > /proc/sys/net/ipv6/conf/tap0/disable_ipv6
 echo 1 > /proc/sys/net/ipv6/conf/tap0/forwarding
 echo 1 > /proc/sys/net/ipv6/conf/eth0/forwarding
@@ -15,10 +22,10 @@ ip link set nat64 up
 echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 echo 0 > /proc/sys/net/ipv6/conf/nat64/disable_ipv6
 echo 1 > /proc/sys/net/ipv6/conf/nat64/forwarding
-ip addr add 172.46.0.1 dev nat64
+ip addr add $(netinfo r) dev nat64
 ip addr add cccc::2/64 dev nat64
 ip route add cccc::64:0:0/96 dev nat64
-ip route add 172.46.0.0/16 dev nat64
+ip route add $(netinfo p) dev nat64
 tayga
 sleep 5
 cat /var/log/6lbr.ip
