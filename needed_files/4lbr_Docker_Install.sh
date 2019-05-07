@@ -43,6 +43,18 @@ make
 make install
 mkdir -p /var/db/tayga
 
+
+cd /app
+addgroup wheel
+adduser root wheel
+git clone https://github.com/fwdillema/totd.git
+cd /app/totd
+./configure
+make
+make install
+mkdir -p /etc/totd
+cp /needed_files/totd.conf /etc/totd/totd.conf
+
 apt-get remove --auto-remove --purge -y git
 apt-get remove --auto-remove --purge -y build-essential
 apt-get remove --auto-remove --purge -y manpages
